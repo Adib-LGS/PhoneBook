@@ -6,7 +6,9 @@ class PhoneBook
 {
     public static function searchByName(string $name)
     {
-        return collect(self::contacts());
+        return collect(self::contacts())->filter(function($value, $key) {
+            dump($value, $key);
+        });
     }
 
     public static function contacts(): array
