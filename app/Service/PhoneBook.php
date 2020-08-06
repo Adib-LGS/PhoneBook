@@ -5,31 +5,27 @@ use Illuminate\Support\Str;
 
 class PhoneBook
 {
-    public static function searchByName(string $name):array
+    public static function searchByName(string $name): array
     {
-        //PHP 7 fn replace function closure
         return self::searchBy('name', $name);     
     }
 
-    public static function searchByCity(string $city):array
+    public static function searchByCity(string $city): array
     {
-        //PHP 7 fn replace function closure
         return self::searchBy('city', $city);     
     }
 
-    public static function searchByEmail(string $email):array
+    public static function searchByEmail(string $email): array
     {
-        //PHP 7 fn replace function closure
         return self::searchBy('email', $email);    
     }
 
-    public static function searchBy(string $key, $value):array
+    public static function searchBy(string $key, string $value): array
     {
         //PHP 7 fn replace function closure
         return collect(self::contacts())
             //dump($contact);
-        ->filter(fn($contact) => Str::contains(strtolower($contact[$key]), strtolower($value)))
-        ->all();      
+        ->filter(fn($contact) => Str::contains(strtolower($contact[$key]), strtolower($value)))->all();      
     }
 
     public static function contacts(): array
