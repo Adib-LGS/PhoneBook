@@ -1,14 +1,35 @@
 <?php
 
 namespace App\Service;
+use Illuminate\Support\Str;
 
 class PhoneBook
 {
-    public static function searchByName(string $name)
+    public static function searchByName(string $name):array
     {
-        return collect(self::contacts())->filter(function($value, $key) {
-            dump($value, $key);
-        });
+        //PHP 7 fn replace function closure
+        return self::searchBy('name', $name);     
+    }
+
+    public static function searchByCity(string $city):array
+    {
+        //PHP 7 fn replace function closure
+        return self::searchBy('city', $city);     
+    }
+
+    public static function searchByEmail(string $email):array
+    {
+        //PHP 7 fn replace function closure
+        return self::searchBy('email', $email);    
+    }
+
+    public static function searchBy(string $key, $value):array
+    {
+        //PHP 7 fn replace function closure
+        return collect(self::contacts())
+            //dump($contact);
+        ->filter(fn($contact) => Str::contains(strtolower($contact[$key]), strtolower($value)))
+        ->all();      
     }
 
     public static function contacts(): array
@@ -32,14 +53,14 @@ class PhoneBook
                 'name' => 'Eli Doe',
                 'email' => 'ElieD@test.com',
                 'phone' => '1987654321',
-                'city' => 'Montreal, CA'
+                'city' => 'Vancouver, CA'
             ],
 
             [
                 'name' => 'Bob Marley',
                 'email' => 'BobbyD@test.com',
                 'phone' => '4987654327',
-                'city' => 'Montreal, CA'
+                'city' => 'Toronto, CA'
             ],
         ];
     }
